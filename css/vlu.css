@@ -1,0 +1,130 @@
+/* =========================================
+    Default Theme
+    ----------------------------------------
+    Fonts: Roboto Condensed
+    ----------------------------------------
+    Colors:
+        Blue:               #0065ca
+        Bule-btn :          #0062fa
+    ----------------------------------------
+    Nguyen Thi Hong Dung 28.09.2019
+                            
+============================================ */
+/* =========================================
+                Page Header Top
+============================================ */
+/* #page-header-top{ */
+       /* background-image: linear-gradient(140deg, #0063fa 0%, #0c73fe 35%, #004f9d 100%); */
+/* } */
+/* =========================================
+                Page Header bottom
+============================================ */
+/* #page-header-bottom{ */
+    /* background-color: #0065ca; */
+/* } */
+/* #page-header-bottom h2{ */
+    /* color:#fff;   */
+/* } */
+/* =========================================
+                btn registration
+============================================ */
+
+#btn-registration .btn:hover{
+  
+    box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.54);
+   
+}
+#btn-registration .btn-primary{
+    color: #0065ca;
+    background-color: #fff;
+    border-color:#fff; 
+}
+#btn-registration .btn-primary:hover{
+    color: #0065ca;
+    border-color: #fff!important;
+    background-color: #fff!important;
+    
+}
+/* =========================================
+                Page Content
+============================================ */
+#page-content{
+    background:  url('../images/bg.jpg') no-repeat center;
+    background-size: cover;
+   
+}
+
+/* =========================================
+                Button Search
+============================================ */
+#btn-search {
+    border-color: #0062fa;
+    color: #fff;
+    background: #0062fa url(../images/Icon_Arrow.png) no-repeat right 10px center;
+}
+#btn-search:hover{
+    color: #0062fa;
+    border-color: #0062fa!important;}
+
+/* =========================================
+                Page footer top
+============================================ */
+
+#page-footer-top{
+    background: url('../images/bg-footer.png') no-repeat right 25% center;
+    background-size:cover;
+}
+/* #page-footer-top h3{ */
+    /* color: #fff; */
+/* } */
+/* =========================================
+                Page footer bottom
+============================================ */
+
+/* #page-footer-bottom{ */
+      /* background-image: linear-gradient(140deg, #0063fa 0%, #0c73fe 35%, #004f9d 100%); */
+    /* color: #fff; */
+/* } */
+/* =========================================
+               Table Chọn Học Phần
+============================================ */
+.table-hover>tbody>tr:hover{
+    background-color: #0065ca;
+}
+/* =========================================
+               Button Thanh Toán
+============================================ */
+#btn-thanhtoan {
+    background-color: #0062fa;
+     border-color:#0062fa;
+}
+#btn-thanhtoan:hover{
+    color: #0062fa!important;
+    border-color:#0062fa;
+}
+
+/* =========================================
+               Responsive
+============================================ */
+  @media(max-width:768px){
+    
+    .table-responsive .table > tbody > tr > td:hover{
+        background-color: #5f92c4;
+    }
+    
+}
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+

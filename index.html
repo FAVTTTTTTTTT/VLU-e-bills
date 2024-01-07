@@ -1,0 +1,927 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cổng Thanh Toán Trực Tuyến - Trường Đại học Văn Lang</title>
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <!-- normalize -->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!-- animation -->
+    <link href="css/animate.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- font-icon-->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- google font-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,700&amp;display=swap&amp;subset=latin-ext,vietnamese" rel="stylesheet">
+    <!-- owl.carousel -->
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/owl.theme.default.min.css" rel="stylesheet">
+    <!--style-->
+    <link href="css/home.css" rel="stylesheet">
+    <link href="css/vlu.css" rel="stylesheet">
+    <style type="text/css">
+        /* Display animation during ajax request loading */
+        /* Start by setting display:none to make this hidden.
+        Then we position it in relation to the viewport window
+        with position:fixed. Width, height, top and left speak
+        for themselves. Background we set to 80% white with
+        our animation centered, and no-repeating */
+        .modal-loading-animation {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8 ) url('images/loading.gif') 50% 50% no-repeat;
+        }
+
+        /* When the body has the loading class, we turn
+        the scrollbar off with overflow:hidden */
+        body.loading .modal-loading-animation {
+            overflow: hidden;
+        }
+
+        /* Anytime the body has the loading class, our
+        modal element will be visible */
+        body.loading .modal-loading-animation {
+            display: block;
+        }
+        /* /Display animation during ajax request loading */
+
+        /* hotfix to avoid loosing checkbox in debts modal window for mobile devices */
+        @media (max-width: 767px){
+            input[type=checkbox], input[type=radio] {
+                float: right;
+                display: block;
+            }
+        }
+        /*make topup btn look same with pay button*/
+        #btn-topup {
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        /* created offline invoice details panel */
+        /*==============Mo Ta================*/
+        .created-invoice h3 {
+            color: #121212;
+        }
+
+        .created-invoice p {
+            color: #121212 !important;
+        }
+
+        .created-invoice {
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px 10px 45px 25px;
+        }
+
+        .created-invoice-send {
+            float: right;
+            margin-top: 10px;
+        }
+
+        .sendmail, .sendsms {
+            margin-right: 10px;
+            border: 1px solid #b9b2b2;
+            color: #07416d;
+            background-color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+            .sendmail:hover, .sendsms:hover {
+                color: #fff;
+                background-color: #07416d;
+                border-color: #fff;
+            }
+
+        #banks ul {
+            float: none; /*hotfix to not display offline created-invoice panel in full height*/
+        }
+
+        .banks-offline ul {
+            width: 100%;
+            min-height: 34px;
+        }
+            .banks-offline ul > li {
+                float: left;
+                border: 1px dashed transparent;
+                margin: 3px;
+                height: 31px;
+                border-radius: 3px;
+                /*use white background for icons if page has dark background*/
+                /*padding: 6px;*/
+                background-color: gainsboro;
+                /*list-style-type: none;*/
+            }
+                .banks-offline ul > li.active {
+                    border: 2px solid #f00;
+                    position: relative;
+                    padding: 5px;
+                }
+                    .banks-offline ul > li.active.disabled {
+                        border: 2px solid #9e9e9e;
+                    }
+                    .banks-offline ul > li.active:after {
+                        content: "\e013";
+                        position: absolute;
+                        background: #fc0303;
+                        width: 25px;
+                        height: 25px;
+                        right: -12px;
+                        top: -12px;
+                        color: #fff;
+                        display: inline-block;
+                        font-family: 'Glyphicons Halflings';
+                        font-style: normal;
+                        font-weight: 300;
+                        text-align: center;
+                        line-height: 25px;
+                        border-radius: 50%;
+                    }
+                    .banks-offline ul > li.active.disabled:after {
+                        content: "\e033";
+                        background: #9e9e9e;
+                    }
+                .banks-offline ul > li a {
+                    display: block;
+                    height: 31px;
+                    width: 65px;
+                    /*line-height: 58px;*/
+                    text-align: center;
+                    margin: 2px;
+                }
+                .banks-offline ul > li a img {
+                    display: inline-block;
+                    width: 100%;
+                    height: auto;
+                }
+
+        #offlineInvoiceInstructionsModal .invoice-num {
+            text-transform: uppercase;
+        }
+        #offlineInvoiceInstructionsModal p {
+            color: #010101;
+            font-size: 1rem;
+        }
+
+        #offlineInvoiceInstructionsModal .modal-body {
+            position: relative;
+            height: 0;
+            padding-bottom: 80.0%;
+        }
+
+        #offlineInvoiceInstructionsModal iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* QR code */
+        #qr-canvas canvas {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div id="page" class="detail">
+            <header id="page-header">
+                <div id="page-header-top">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-5">
+                                <div id="notification" class="vertical-middle">
+                                    <marquee><p>chào mừng bạn đến với hệ thống thanh toán online</p></marquee>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-7 position-relative ">
+
+                                <div id="menu-top">
+                                    <nav class="navbar">
+                                        <div class="navbar-header">
+                                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                                                <span class="sr-only">Toggle navigation</span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                            </button>
+                                        </div>
+                                        <div id="menu" class="navbar-collapse collapse">
+                                            <ul class="nav navbar-nav float-right">
+                                                <li><a href="/pay/vlu">Trang chủ</a></li>
+                                                <li><a href="#">Giới thiệu</a></li>
+                                                <li><a href="http://info.e-bills.vn/vlu-huong-dan-thanh-toan.html" target="_blank">Hướng dẫn</a></li>
+                                                <li><a href="#">Liên hệ</a></li>
+                                            </ul>
+                                        </div>
+                                    </nav>
+                                </div>
+
+                                
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /#page-header-top-->
+
+                <div id="page-header-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <a href="/pay/vlu" title="Trang Chủ">
+                                    <img src="images/Logo.png" alt="logo vlu" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <div id="header-text-main">
+                                    <div class="vertical-middle">
+                                        <h2>Cổng Thanh Toán Trực Tuyến</h2>
+                                    </div>
+                                    <hr class="visible-sm">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-2">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / #page-header-bottom-->
+            </header>
+            <!-- / #home-header-->
+        <section id="page-content">
+            <div class="main-content">
+                <div class="content-box-lg">
+                    <div class="container">
+                        <div class="row flex-box">
+                            <div class="col-sm-12 col-md-6 flex-item">
+                                <div class="content-box-sm">
+                                    <div id="detail-col-left" class="detail-col">
+                                        <h2>Thông tin sinh viên</h2>
+
+                                        <div class="form-group">
+                                            <label for="masv">MSSV</label>
+                                            <input type="text" class="form-control" id="masv" value="2274802010120" readonly="readonly">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="hoten">Họ và&nbsp; tên sinh viên</label>
+                                            <input type="text" class="form-control" id="hoten" value="Nguyễn Quốc Duy" readonly="readonly">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="khoa">Khoa</label>
+                                            <input type="text" class="form-control" id="khoa" value="Khoa Công nghệ thông tin_VLTECH" readonly="readonly">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="btn-nophi">Số tiền nợ học phí <i>(Nhấn vào mũi tên để chọn số tiền cần đóng)</i></label>
+                                            <a id="btn-nophi" href="#" role="button" class="btn form-control" data-toggle="modal" data-target="#debtsModal"><input="totalAmount">25.500.000</span> vnđ <span></span><i class="fa fa-arrow-right animated fadeInRight infinite"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 flex-item">
+                                <div class="content-box-sm">
+                                    <div id="detail-col-right" class="detail-col">
+                                        <h2>Chọn hình thức thanh toán</h2>
+
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div id="banks">
+                                                    <input type="hidden" name="payment-provider-list" value="0">
+                                                    <ul id="payment-provider-list" class="list-unstyled">
+                                                            <li class="">
+                                                                <a title="SacomBank" href="javascript:void(0)" class="li-bank" data-provider-code="SacomBank" data-invoice-type="Online" data-payment-method-id="122" data-pay-by-qr="False" onclick="paymentProviderAction('SacomBank')">
+                                                                    <img src="images/SacomBank.png" height="74" width="120">
+                                                                </a>
+                                                            </li>
+                                                            <li class="">
+                                                                <a title="Chọn để tạo mã thanh toán" href="javascript:void(0)" class="li-bank" data-provider-code="" data-invoice-type="Offline" data-payment-method-id="0" data-pay-by-qr="False" onclick="paymentProviderAction('')">
+                                                                    <img src="images/CreateInvoiceCode.png" height="74" width="120">
+                                                                </a>
+                                                            </li>
+                                                    </ul>
+                                                </div>
+                                                <div id="pgNote"></div>
+                                                
+                                                
+<style>
+    .created-invoice {
+        background-color: #fcfcfc;
+    }
+    .invoice-wrapper {
+        padding-top: 1rem;
+    }
+
+    .box-code-img {
+        border: 1px solid #888;
+        padding: 1rem 1rem 0 1rem;
+        text-align: center;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+    }
+
+        .box-code-img img {
+            width: 100%;
+            max-width: 200px;
+        }
+    .invoice-info{
+        padding:0;
+    }
+</style>
+<div class="created-invoice" style="display: none">
+    <div>
+        <h3>Thông tin thanh toán</h3>
+        <div class="invoice-wrapper">
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <ul class="invoice-info">
+                        <li>
+                            <span>Mã thanh toán</span>
+                            <p><b><span class="invoice-num"></span></b></p>
+                        </li>
+                        <li>
+                            <span>Số tiền</span>
+                            <p><b><span class="invoice-amount"></span> VNĐ</b></p>
+                        </li>
+                        <li>
+                            <span>Thời hạn thanh toán</span>
+                            <p><b><span class="invoice-expired"></span></b></p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6" id="codeForScan">
+                    <div class="box-code-img">
+
+                        <img id="invoiceNumBarcode" alt="mã thanh toán"><br>
+                        <img id="invoiceNumQrCode" alt="mã thanh toán">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--<table>
+            <tr>
+                <td colspan="2"><h3>Thông tin thanh toán</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    Mã thanh toán<br />     <b><span class="invoice-num"></span></b><br /><br />
+                    Số tiền<br />     <b><span class="invoice-amount"></span> VNĐ</b><br /><br />
+                    Thời hạn thanh toán<br />     <b><span class="invoice-expired"></span></b>
+                </td>
+                <td>
+                    <img id="invoiceNumBarcode" alt="mã thanh toán" style="width:200px" /><br />
+                    <img id="invoiceNumQrCode" alt="mã thanh toán" style="width:200px" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Ngân hàng hỗ trợ<br /><div style=\"color: red;\">Vui lòng <b>thanh toán chính xác số tiền</b> đã chọn để được gạch nợ đúng hạn tại các ngân hàng thụ hưởng của Văn Lang:</div></td>
+            </tr>
+        </table>-->
+        <!--<h3>Mã thanh toán : <span class="invoice-num"></span></h3>
+        <p>Số tiền : <span class="invoice-amount"></span> VNĐ</p>
+        <p>Thời hạn thanh toán: <span class="invoice-expired"></span></p>
+        <div style=\"color: red;\">Vui lòng <b>thanh toán chính xác số tiền</b> đã chọn để được gạch nợ đúng hạn tại các ngân hàng thụ hưởng của Văn Lang:</div>-->
+    </div>
+    <!--<div class="banks-offline">
+        <ul class="list-unstyled">
+                <li>
+                    <a title="SacomBank" href="javascript:void(0)" class="li-bank"
+                       data-provider-code="SacomBank"
+                       data-invoice-type="Offline"
+                       data-payment-method-id="121">
+                        <img src="/assets/img/SacomBank.png">
+                    </a>
+                </li>
+                <li>
+                    <a title="Agribank" href="javascript:void(0)" class="li-bank"
+                       data-provider-code="Agribank"
+                       data-invoice-type="Offline"
+                       data-payment-method-id="129">
+                        <img src="/assets/img/Agribank.png">
+                    </a>
+                </li>
+                <li>
+                    <a title="SHB" href="javascript:void(0)" class="li-bank"
+                       data-provider-code="SHB"
+                       data-invoice-type="Offline"
+                       data-payment-method-id="106">
+                        <img src="/assets/img/SHB.png">
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div>
+        <div class="col-md-8">
+            <input type="text" class="email form-control" placeholder="Email" style="display: none">
+            <input type="text" class="sms form-control" placeholder="Phone" style="display: none">
+        </div>
+        <div class="col-md-2 created-invoice-send">
+            <a id="btn-mail" href="#" role="button" class="email sendmail">Mail</a>
+        </div>
+    </div>
+        -->
+</div>
+
+                                            </div>
+                                        </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div id="banks-offline">
+                                                        <h5 style="color: #c0bebe ">Tạo mã thanh toán để đóng tiền tại quầy hoặc qua ứng dụng di động đối với các ngân hàng sau (nhấn vào để xem hướng dẫn) :</h5>
+                                                        <ul class="list-unstyled">
+                                                                <li style="float: left; border: 1px dashed transparent;border-color:#a9a9a9;margin:3px;height:30px;border-radius:3px;background-color:white">
+                                                                    <a title="SacomBank" href="javascript:void(0)" class="li-bank" onclick="offlinePaymentInstruction('SacomBank')">
+                                                                        <img src="images/SacomBank.png" style="display: inline-block;height:28px;width:80px;">
+                                                                    </a>
+                                                                </li>
+                                                                <li style="float: left; border: 1px dashed transparent;border-color:#a9a9a9;margin:3px;height:30px;border-radius:3px;background-color:white">
+                                                                    <a title="Agribank" href="javascript:void(0)" class="li-bank" onclick="offlinePaymentInstruction('Agribank')">
+                                                                        <img src="images/Agribank.png" style="display: inline-block;height:28px;width:80px;">
+                                                                    </a>
+                                                                </li>
+                                                                <li style="float: left; border: 1px dashed transparent;border-color:#a9a9a9;margin:3px;height:30px;border-radius:3px;background-color:white">
+                                                                    <a title="SHB" href="javascript:void(0)" class="li-bank" onclick="offlinePaymentInstruction('SHB')">
+                                                                        <img src="images/SHB.png" style="display: inline-block;height:28px;width:80px;">
+                                                                    </a>
+                                                                </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <a id="btn-pay" href="#" role="button" class="btn btn-primary form-control">Thanh toán</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="content-box-sm">
+                                    <div id="detail-col-bottom" class="detail-col">
+                                        <h2>Danh sách hóa đơn</h2>
+
+                                        <div class="table-responsive">
+                                            <table id="tbl-HoaDon" class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mã hóa đơn</th>
+                                                        <th>Ngày tạo</th>
+                                                        <th>Ngày hết hạn</th>
+                                                        <th>Tổng</th>
+                                                        <th>Thanh toán</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr onclick="invoiceDetail('jk93s8012l')">
+                                                        <td data-title="Mã hóa đơn:">jk93s8012l</td>
+                                                        <td data-title="Ngày tạo:">22/12/2023 12:40:22</td>
+                                                        <td data-title="Ngày hết hạn:">29/12/2023 20:59:00</td>
+                                                        <td data-title="Tổng:">1.100.000</td>
+                                                        <td data-title="Thanh toán:">Đã thanh toán</td>
+                                                    </tr>
+                                                     <tr onclick="invoiceDetail('u8djicfli2')">
+                                                        <td data-title="Mã hóa đơn:">u8djicfli2</td>
+                                                        <td data-title="Ngày tạo:">15/10/2023 10:51:36</td>
+                                                        <td data-title="Ngày hết hạn:">20/10/2023 20:59:00</td>
+                                                        <td data-title="Tổng:">2.700.000</td>
+                                                        <td data-title="Thanh toán:">Đã thanh toán</td>
+                                                    </tr>
+                                                    <tr onclick="invoiceDetail('u8djicfli2')">
+                                                        <td data-title="Mã hóa đơn:">u8djicfli2</td>
+                                                        <td data-title="Ngày tạo:">15/10/2023 10:51:36</td>
+                                                        <td data-title="Ngày hết hạn:">20/10/2023 20:59:00</td>
+                                                        <td data-title="Tổng:">2.700.000</td>
+                                                        <td data-title="Thanh toán:">Đã thanh toán</td>
+                                                    </tr>
+                                                        <tr onclick="invoiceDetail('t3uapskbyq')">
+                                                            <td data-title="Mã hóa đơn:">t3uapskbyq</td>
+                                                            <td data-title="Ngày tạo:">22/02/2023 19:51:36</td>
+                                                            <td data-title="Ngày hết hạn:">22/02/2023 20:51:36</td>
+                                                            <td data-title="Tổng:">22.020.000</td>
+                                                            <td data-title="Thanh toán:">Đã thanh toán</td>
+                                                        </tr>
+                                                        <tr onclick="invoiceDetail('b51nw1uem1')">
+                                                            <td data-title="Mã hóa đơn:">b51nw1uem1</td>
+                                                            <td data-title="Ngày tạo:">11/04/2023 20:11:09</td>
+                                                            <td data-title="Ngày hết hạn:">11/04/2023 21:11:09</td>
+                                                            <td data-title="Tổng:">1.590.000</td>
+                                                            <td data-title="Thanh toán:">Đã thanh toán</td>
+                                                        </tr>
+                                                        <tr onclick="invoiceDetail('ue3nk9j5j9')">
+                                                            <td data-title="Mã hóa đơn:">ue3nk9j5j9</td>
+                                                            <td data-title="Ngày tạo:">25/05/2023 20:17:28</td>
+                                                            <td data-title="Ngày hết hạn:">25/05/2023 21:17:28</td>
+                                                            <td data-title="Tổng:">900.000</td>
+                                                            <td data-title="Thanh toán:">Đã thanh toán</td>
+                                                        </tr>
+                                                        <tr onclick="invoiceDetail('59rk3biyjn')">
+                                                            <td data-title="Mã hóa đơn:">59rk3biyjn</td>
+                                                            <td data-title="Ngày tạo:">31/05/2023 18:28:00</td>
+                                                            <td data-title="Ngày hết hạn:">31/05/2023 19:28:00</td>
+                                                            <td data-title="Tổng:">18.720.000</td>
+                                                            <td data-title="Thanh toán:">Đã thanh toán</td>
+                                                        </tr>
+                                                        <tr onclick="invoiceDetail('t2e8ba8jvn')">
+                                                            <td data-title="Mã hóa đơn:">t2e8ba8jvn</td>
+                                                            <td data-title="Ngày tạo:">04/09/2023 21:17:21</td>
+                                                            <td data-title="Ngày hết hạn:">04/09/2023 22:17:21</td>
+                                                            <td data-title="Tổng:">21.540.000</td>
+                                                            <td data-title="Thanh toán:">Đã thanh toán</td>
+                                                        </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- / .main-content-->
+        </section>
+        <!-- / #page-content-->
+            <footer id="page-footer">
+                <div id="page-footer-top">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="footer-item">
+                                    <h3>Về VLU</h3><p><strong>Địa chỉ:</strong>45 Nguyễn Khắc Nhu, P. Cô Giang, Q.1, TP. HCM</p><p><strong>Điện thoại:</strong> (84) 12.34.567.890 </p><p><strong>E-mail:</strong> hocphi@vlu.edu.vn</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="footer-item">
+                                            <h3>Hỗ Trợ</h3>
+                                            <ul class="list-unstyled">
+                                                <li><a href="javascript:void(0)" title="Giới thiệu">Giới thiệu</a></li>
+                                                <li><a href="javascript:void(0)" title="Hướng dẫn" target="_blank">Hướng dẫn</a></li>
+                                                <li><a href="javascript:void(0)" title="Liên hệ">Liên hệ</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="footer-item">
+                                            <h3>Kết nối</h3>
+                                            <ul class="list-inline">
+                                                <li><a href="#" target="_blank" title="facebook"><img src="images/facebook-icon-white-logo-png-transparent.png" alt="icon facebook"></a></li>
+                                                <li><a href="#" target="_blank" title="youtube"><img src="images/youtube.png" alt="icon youtube"></a></li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="page-footer-bottom">
+                    <div class="container">
+                        <p>Copyright ©2018 - 2020 by <a href="http://psctelecom.com.vn" target="_blank"><img src="images/PSC_whiteLogo.png"></a>.All rights reserved</p>
+                    </div>
+
+                </div>
+            </footer>
+            <!-- / #page-footer -->
+    </div>
+    <!-- /.home -->
+    <!--Debts modal-->
+    <div class="modal fade" id="debtsModal" tabindex="-1" role="dialog" aria-labelledby="debtsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Các khoản phí</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="tbl-ChonHocPhan" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã</th>
+                                <th>Tên</th>
+                                <th></th>
+                                <th>Loại Phí</th>
+                                <th>Số tiền (VNĐ)</th>
+                                <th><span>Chọn</span><input id="debts-select-all" type="checkbox" checked=""></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>>
+                            <td>15852188; 15874014; 15901729; 15940739</td>
+                            <td>Học phí tín chỉ HK02 - 2023-2024</td>
+                            <td></td>
+                            <td>[Hoc phí]</td>
+                            <td>25.500.000</td>
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!--/debts modal-->
+    <!--alert modal-->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Alert</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!--/alert modal-->
+    <!--Topup modal -->
+    <div class="modal fade" id="topupModal" tabindex="-1" role="dialog" aria-labelledby="topupModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Nộp tiền v�&nbsp;o t�&nbsp;i khoản</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="topup-value">Nhập số tiền cần nộp (VNĐ)</label>
+                    <input type="text" class="form-control" id="topup-amount" value="" onkeyup="letInputNumOnly(this)" onblur="letInputNumOnly(this)">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Trở về</button>
+                <button type="button" class="btn btn-primary btn-pay-topup">Nộp tiền</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!--/Topup modal-->
+    <!--Checkout modal -->
+    <div class="modal fade" id="checkoutFormModal" tabindex="-1" role="dialog" aria-labelledby="checkoutFormModal" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Thanh toán tại MB</h4>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm" class="form-horizontal" action="/pay/checkout/" method="post">
+                    <input type="hidden" id="checkout-form-pay-link" name="paymentLink">
+                    <input type="hidden" id="checkout-form-request-id" name="requestId">
+                    <input type="hidden" id="checkout-form-payment-ref" name="paymentRef">
+                    <div class="alert alert-danger" role="alert" style="display: none"></div>
+                    <div class="alert alert-success" role="alert" style="display: none"></div>
+                    <div class="form-group account-form-field">
+                        <label for="account-num" class="control-label col-sm-5">Số thẻ</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="account-num" name="accountNumber" placeholder="Số thẻ" value="">
+                        </div>
+                    </div>
+                    <div class="form-group account-form-field">
+                        <label for="account-name" class="control-label col-sm-5">Họ tên chủ thẻ</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="account-name" name="accountName" placeholder="Họ tên chủ thẻ" value="">
+                        </div>
+                    </div>
+                    <div class="form-group account-form-field">
+                        <label for="account-open-date" class="control-label col-sm-5">Ng�&nbsp;y phát h�&nbsp;nh</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="account-open-date" name="accountDate" placeholder="MM/YY" value="">
+                        </div>
+                        
+                    </div>
+                    <div class="form-group otp-form-field" style="display: none">
+                        <label for="account-otp" class="control-label col-sm-5">OTP</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="account-otp" name="otp" placeholder="Vui lòng nhập OTP" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 pull-right">
+                            <button type="submit" class="btn btn-primary">Thanh toán</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Trở về</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+                       
+        </div>
+    </div>
+</div>
+
+    <!--/Checkout modal-->
+    <!--QR code display modal-->
+    <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body row">
+                <div class="col-md-6" id="qr-canvas"></div>
+                <div class="col-md-6"><img src="images/vnpayqr_promo.jpg" class="img-responsive"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!--/QR code display modal-->
+    <div class="modal-loading-animation"><!-- modal popup for animation during loading ajax request --></div>
+
+    <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!--owl.carousel-->
+    <script src="js/owl.carousel.min.js"></script>
+
+    <script src="js/moment.min.js"></script>
+
+    <script src="js/pay.common.js"></script>
+    <script src="js/paymerchant.js"></script>
+
+    <script type="text/javascript">
+        var merchantProfile = '/assets/merchant/vlu/themedefault';
+    </script>
+    <script src="js/script.js"></script>
+    <script type="text/javascript" src="js/qr-code-styling.js"></script>
+
+    <script type="text/javascript">
+        var errMsgNoDebts = "Chưa chọn khoản cần thanh toán";//"No debts selected";
+        var errMsgNoProviders = "Vui lòng chọn hình thức thanh toán";//"No providers selected";
+        var errMsgNotNumber = "Value is not a number";//"Value is not a number";
+        var currentInvoiceNum = "";
+        var currentInvoiceData;
+        $(document).ready(function () {
+            initDebtCheckboxes();
+        });
+
+        //this fn is partially copied from createBill. TODO refactor duplication
+        $('#btn-pay').on('click', function () {
+            let selectedProvider = $("#payment-provider-list>li.active").children("a");
+            if (selectedProvider.length == 0) {
+                $('#alertModal').find(".modal-body").text("Chưa chọn hình thức thanh toán");
+                $('#alertModal').modal({ "backdrop": true });
+                return;
+            }
+            //validation
+            if (!validateOnlinePaymentAttempt()) return;
+
+            //có sẵn mã đơn -> provider-url có giá trị -> mở link này
+            var providerUrl = $("#payment-provider-list>li.active").children("a").data("provider-url");
+            if (providerUrl) {
+                window.location.replace(providerUrl);
+                return false;
+            }
+
+            //có sẵn mã đơn
+            if (currentInvoiceNum) {
+                let payMethodId = $("#payment-provider-list>li.active").children("a").data("payment-method-id");
+                
+                if (payMethodId == 0) { //thanh toán offline
+                    showOfflineCreatedInvoiceInfo(currentInvoiceData);
+                } else { //thanh toán bằng QR
+                    let payByQr = $("#payment-provider-list>li.active").children("a").data("pay-by-qr");
+                    let providerCode = $("#payment-provider-list>li.active").children("a").data("provider-code");
+                    if (payByQr) {
+                        let qrUrl = `https://pscebillinfo.azurewebsites.net/invoiceqrpay.html?num=${currentInvoiceData.code}&bank=${providerCode}`;
+                        $("#offlineInvoiceInstructionsIframe").attr('src', qrUrl);
+                        $('#offlineInvoiceInstructionsModal').modal({ "backdrop": true });
+                    }
+                }
+                return false;
+            }
+
+            //Chưa có đơn
+            var paymentMethodId = $("#payment-provider-list>li.active").children("a").data("payment-method-id");
+            //create new invoice and redirect to payment provider
+            var url = "/Pay/CreateBill/vlu/2274802010120" + "?method=" + paymentMethodId; //use html-raw to not decode customer id with VN chars (i.e. 13CĐDVLVH07)
+            var debts = new Array();
+            $(".debtSelector:checked").each(function (index) {
+                //debts.push($(this).attr("data-debtId"));
+                debts.push({ debtId: $(this).attr("data-debtId"), debtAmount: $(this).val() });
+            });
+            createInvoice(url, debts);
+        });
+        $("#debts-select-all").on('click', function () {
+            //check/uncheck all (except disabled) debts selectors
+            $('.debtSelector:not([disabled])').each(function () {
+                $(this).prop("checked", $("#debts-select-all").prop("checked"));
+            });
+        });
+        $('#btn-topup').on('click', function () {
+            if (!validateTopupPaymentAttempt())
+                return;
+            $('#topupModal').modal({ "backdrop": true });
+        });
+        $('.btn-pay-topup').on('click', function () {
+            $('#topupModal').modal('hide');
+            var paymentMethodId = $("#payment-provider-list>li.active").children("a").data("payment-method-id");
+            var amount = $("#topup-amount").val().split(' ').join('').replace('.', '');
+            if (isEmpty(amount) || !validateValueIsNumeric(amount))
+                return;
+            var url = "/Pay/CreateTopup/vlu/2274802010120" + "?method=" + paymentMethodId + "&amount=" + amount; //use html-raw to not decode customer id with VN chars (i.e. 13CĐDVLVH07)
+            createTopup(url);
+        });
+        //format user-input string as money amount
+        $('#topup-amount').on('keyup', function () {
+            $(this).val(formatMoneyString.call($(this).val().split(' ').join(''), ' ', '.'));
+        });
+        $body = $("body");
+        $(document).on({
+            ajaxStart: function () { $body.addClass("loading"); },
+            ajaxStop: function () { $body.removeClass("loading"); }
+        });
+        function paymentProviderAction(pgCode) {
+            let merchant = 'vlu';
+            pgNote.innerHTML = "";
+            if (!pgCode) {
+                $('#btn-pay').text("Tạo mã");
+            } else {
+                $('#btn-pay').text("Thanh toán");
+                let pgNoteHtml = "";
+
+                if (pgCode == "MomoV2") {
+                    pgNoteHtml = "<span style='color:white'><i>Phí giao dịch qua MoMo : 1.1% (tối đa 22.000 VNĐ)</i></span>";
+                } else if (pgCode == "VnPay" || pgCode == "VnPayQR") {
+                    pgNoteHtml = "<span style='color:white'>Liên hệ hỗ trợ : <a target='_blank' href='https://zalo.me/4134983655549474109'>VNPAY Zalo</a></span>";
+                }
+                pgNote.innerHTML = pgNoteHtml;
+            }
+        }
+    </script>
+    <div class="modal fade" id="offlineInvoiceInstructionsModal" tabindex="-1" role="dialog" aria-labelledby="offlineInvoiceInstructionsModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="offlineInvoiceInstructionsIframe" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body></html>

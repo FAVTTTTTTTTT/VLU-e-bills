@@ -1,0 +1,805 @@
+/* =========================================
+    Default Theme
+    ----------------------------------------
+    Fonts: Roboto Condensed
+    ----------------------------------------
+    Colors:
+        Blue:                #0066b3
+        Blue dark:           #07416d
+        Yellow:              #ff0
+        Dark:                #111
+        Dark 2:              #010101
+        Dark 3:              #626262
+        Grey:                #c0bebe
+        White:               #fff
+        Black:               #000
+		Red:                 #f00
+	----------------------------------------
+	Nguyen Thi Hong Dung     10.06.2020
+============================================ */
+
+/* =========================================
+                Html, Body
+============================================ */
+
+html,
+body {
+    height: 100%;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+html{
+    font-size: 14px;
+}
+body {
+    color: #010101;
+    font-size: 1rem;
+}
+
+a:focus,a:hover{
+    text-decoration: none;
+}
+.float-right{
+    float: right;
+}
+
+.position-relative{
+    position:relative;
+}
+.mr-40{
+    margin-right: 40px;
+}
+
+/* =========================================
+                Page Header Top
+============================================ */
+#page-header-top{
+    background-color:#07416d; 
+    color: #fff;   
+    min-height: 55px;
+}
+#page-header-top p{
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 300;
+}
+#page-header-top a{
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+}
+#page-header-top a:focus,
+#page-header-top a:hover{
+    color: #ff0;
+}
+
+/* =========================================
+                Notification
+============================================ */
+#notification{    
+    min-height: 55px;    
+    padding-left: 50px;
+    background: transparent url("../images/Loa_Icon.png") no-repeat 0 center;
+}
+
+/* =========================================
+                Menu top
+============================================ */
+#menu-top{
+    padding-right: 115px;
+    transition: all 0.4s linear;
+}
+#menu-top .navbar{
+    margin-bottom: 0;
+}
+#menu-top .nav>li>a:focus, .nav>li>a:hover{
+    background-color: transparent;
+    color: #ff0!important;
+}
+button.navbar-toggle {
+    border: 1px solid #fff;
+}
+
+span.icon-bar {
+    background-color: #fff;
+}
+
+/* =========================================
+                Language
+============================================ */
+#language{
+    position: absolute;
+    top:0;
+    right: 15px;
+    transition: all 0.9s ease-out;
+}
+#language .vertical-middle{
+    min-height: 55px;   
+}
+#language img{
+    margin-right: 5px;
+}
+
+/* =========================================
+                vertical middle
+============================================ */
+.vertical-middle{
+    display: table;
+    width: 100%;
+}
+.vertical-middle > *{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* =========================================
+                Page Header bottom
+============================================ */
+#page-header-bottom{
+    padding: 16px 0;
+}
+
+#page-header-bottom h2{
+    color:#07416d;
+    font-size: 25px;
+    font-weight: 700;
+    text-transform: uppercase;    
+}
+
+/* =========================================
+                Header text main
+============================================ */
+#header-text-main .vertical-middle{
+    min-height: 105px;
+}
+
+#header-text-main hr{
+    width: 150px;
+    height: 1px;
+    background-color: #0066b3;
+    display: none;
+}
+/* =========================================
+                btn registration
+============================================ */
+#btn-registration{
+    min-height: 105px;
+}
+#btn-registration .btn{
+    border-radius: 1px;
+    box-shadow: 0px 0px 5px 0px rgba(9, 70, 145, 0.54);
+    min-width: 93px;
+}
+
+.btn-primary{
+    background-color: #07416d!important;
+    border-color:#07416d!important; 
+    transition: all 0.3s ease-in;
+}
+.btn-primary:hover{
+    border-color: #0066b3!important;
+    background-color: #fff!important;
+    color: #0066b3;
+}
+/* =========================================
+                Page Content
+============================================ */
+#page-content{
+    background:  url('../images/bg.jpg') no-repeat center;
+    background-size: cover;
+}
+#page-content .main-content{
+    background: rgba(0,0,0,.67);
+    padding-bottom: 35px;
+    min-height: 700px;
+}
+#page-content h1{
+    font-size: 30px;
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;    
+}
+#page-content hr {
+    width: 95%;
+    border-color: #fff;
+    margin-top: 0;     
+}
+#page-content p{
+    color: #c0bebe;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 300;
+}
+#page-content p:first-of-type{
+    margin-bottom: 20px;
+}
+#page-content .content-box-xs{
+    margin-top: 15px;
+}
+#page-content .content-box-xs .form-group{
+    margin-bottom: 20px;
+}
+
+#page-content .content-box-xs .form-group:last-child{
+    margin-bottom: 0;
+}
+
+#page-content input[type='text']{
+    font-size: 18px;
+    color: #626262;
+    font-weight: 500;
+}
+#page-content .form-control{
+    height: 56px;    
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 2px;
+}
+
+/* =========================================
+                Button Search
+============================================ */
+#btn-search{
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+    background:#0066b3 url('../images/Icon_Arrow.png') no-repeat right 10px center;
+}
+#btn-search:hover{
+    background-color: transparent!important;
+}
+/* =========================================
+                Content box
+============================================ */
+.content-box-lg{
+    padding: 85px 0 130px 0;
+}
+.content-box-md{
+    padding: 20px 80px;
+    background-color:rgba(17,17,17,.67);
+}
+.content-box-sm{
+    padding: 15px 30px 15px 30px;
+    background-color:rgba(17,17,17,.67);    
+}
+.content-box-xs{
+    padding: 30px 15px;
+    background-color:rgba(17,17,17,.67);
+}
+/*==============Mo Ta================*/
+.mota h3 {
+    color: #121212;
+
+}
+.mota p{
+    color: #121212!important;
+}
+.mota{
+    margin-bottom: 10px;
+    background-color: #fff;;
+    padding: 10px 10px 35px 25px;
+}
+.gui {
+   float: right;
+}
+
+.sendmail, .sendsms{
+        margin-right: 10px;
+    border: 1px solid #b9b2b2;
+    color: #07416d;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+   
+}
+.sendmail:hover, .sendsms:hover{
+    color:#fff;
+    background-color: #07416d;
+    border-color:  #fff;
+}
+
+/* =========================================
+                Slider Buttons
+============================================ */
+
+.owl-theme .owl-nav [class*=owl-] { 
+    background: none;
+    margin: 0;
+}
+
+.owl-theme .owl-nav [class*=owl-]:hover {
+    background: none;    
+}
+
+.owl-prev {
+    position: absolute;
+    top: 50%;
+    left: -65px;
+    margin-top: -20px!important;
+}
+.owl-next{
+    position: absolute;
+    top: 50%;
+    right: -65px;
+    margin-top: -20px!important;
+}
+
+/* =========================================
+                Page footer top
+============================================ */
+#page-footer{
+    background-color: #0166b3;
+}
+#page-footer-top{
+    background: url('../images/banner_footer.png') no-repeat right 25% center;
+    background-size:cover;
+    padding: 15px 0; 
+}
+#page-footer-top h3{
+    font-size: 24px;
+    font-weight: 700;
+    color: #07416d;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+#page-footer-top p,
+#page-footer-top a{
+    font-size:18px;
+    color: #010101;
+}
+#page-footer-top p{
+    margin-bottom: 3px;
+    line-height: 1.2;
+}
+
+/* =========================================
+                Page footer bottom
+============================================ */
+
+#page-footer-bottom{
+    background-color: #07416d;
+    padding-top: 15px;
+    color: #fff;
+}
+#page-footer-bottom p{
+    font-size:18px;
+    font-weight: 500;
+}
+
+
+
+/* =========================================
+               flex box
+============================================ */
+.flex-box{
+    display: flex;
+}
+.flex-item{
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+
+    margin-bottom: 30px;
+}
+.flex-item > *{
+    height: 100%;;
+}
+
+/* =========================================
+               Detail col
+============================================ */
+.detail-col h2{
+    font-size: 28px;
+    font-weight: 500;
+    color:#c0bebe;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.detail-col input[type='text']{
+    color:#121212!important;
+    font-weight: 700!important;
+}
+.detail-col label{
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 0;
+}
+.detail-col .form-control {
+    height: 37px!important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+}
+#btn-pay {
+	font-size: 16px;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+/* =========================================
+               Button nộp phí
+============================================ */
+#btn-nophi{
+    font-size: 18px;
+    color:#121212;
+    font-weight: 700;
+    text-align: left;
+    position: relative;
+}
+#btn-nophi .fa{
+    position: absolute;
+    right: 20px;
+    top:9px;    
+}
+#btn-nophi:hover{
+    border-color: #F00;
+    color: #f00;
+}
+#btn-nophi:hover .fa{
+    color: #f00;
+}
+
+/* =========================================
+               Table Hóa Đơn
+============================================ */
+#tbl-HoaDon thead tr th,
+#tbl-HoaDon tbody tr td{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+    border-right:0;
+    border-left: 0;
+    height: 41px;
+}
+#tbl-HoaDon thead tr th:nth-child(1),
+#tbl-HoaDon thead tr th:nth-child(2),
+#tbl-HoaDon thead tr th:nth-child(3){
+    width: 150px;
+}
+#tbl-HoaDon thead tr th:nth-child(4),
+#tbl-HoaDon tbody tr td:nth-child(4){
+    text-align: center;
+}
+#tbl-HoaDon thead tr th:nth-child(5){
+    width:140px;
+}
+.table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+    border-bottom-width: 1px;
+}
+.table-hover>tbody>tr:hover{
+    background-color: #0066b3;
+    cursor: pointer;
+}
+/* =========================================
+               Table Chọn Học Phần
+============================================ */
+#tbl-ChonHocPhan thead tr th,
+#tbl-ChonHocPhan tbody tr td{
+    color: #111;
+    font-size: 18px;
+    font-weight: 300;
+    border-right:0;
+    border-left: 0;
+    height: 41px;
+    transition: all 0.3s linear;
+}
+#tbl-ChonHocPhan.table-hover>tbody>tr:hover td{
+    color: #fff;
+}
+@media (max-width: 768px){}
+.table-responsive #tbl-ChonHocPhan.table > tbody > tr > td[data-title]:before {    
+    color: #111;
+}
+.table-responsive #tbl-ChonHocPhan.table > tbody > tr:hover > td[data-title]:before {    
+    color: #fff;
+}
+}
+/* =========================================
+               Button Thanh Toán
+============================================ */
+#btn-thanhtoan{
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75)!important;
+    transition: all 0.3s linear;
+}
+#btn-thanhtoan:hover{
+    background-color: transparent!important;
+    color: #0066b3!important;
+    border-color:#0066b3;
+}
+/* =========================================
+               Button Hủy
+============================================ */
+#btn-huy{
+        display: none;
+    color: #212121!important;
+    font-weight: 500;
+    transition: all 0.3s linear;
+}
+#btn-huy:hover{
+    background-color: transparent;
+    color: #f00!important;
+    border-color:#f00;
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75)!important;
+}
+  
+/* =========================================
+               Banks
+============================================ */
+#banks ul{
+    width: 100%;
+    min-height: 140px;
+}
+#banks ul >li{
+    float: left;
+    border: 1px dashed transparent;
+    margin: 3px;
+    height: 62px;
+    border-radius: 3px;
+    background-color: white;
+
+}
+#banks ul >li.active{
+    border: 2px solid #f00;
+    position: relative;
+}
+#banks ul >li.active:after {
+    content: "\e013";
+    position: absolute;
+    background: #fc0303;
+    width: 25px;
+    height: 25px;
+    right: -12px;
+    top: -12px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 300;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 50%;
+}
+
+#banks ul >li a{
+    display: block;
+    height: 58px;
+    width: 95px;
+    line-height: 58px;
+    text-align: center;
+}
+#banks ul >li a img{
+    display: inline-block;
+    width: 100%;
+    height: auto;
+}
+
+/* =========================================
+               Modal
+============================================ */
+.modal-header,
+.modal-footer{
+    border-color: transparent;
+}
+.modal-header .close {
+    margin-top: -30px;
+}
+.modal-dialog-centered {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: calc(100% - (.5rem * 2));
+}
+.modal-content{
+    width: 100%;
+}
+@media (min-width: 768px) and (max-width:991px){
+    .modal-dialog {
+        width: 90%;
+        margin: 30px auto;
+    }
+}
+@media (min-width: 576px) {
+    .modal-dialog-centered {
+        min-height: calc(100% - (1.75rem * 2));
+    }
+}
+
+.modal-header h4{
+    font-size: 28px;
+    font-weight: 500;    
+    text-transform: uppercase;    
+}
+/* =========================================
+               Responsive
+============================================ */
+@media(max-width:1199px){
+    .container{
+        width:100%;
+    }
+}
+@media(max-width:991px){
+    .mr-40{
+        margin-right:0;
+    }
+    #menu-top{
+        border-top:1px solid #5994c7;
+    }
+    #header-text-main{
+        text-align: center;
+    }
+    #header-text-main .vertical-middle{
+        padding-top: 40px;        
+        min-height: auto;
+    }
+
+    #btn-registration{
+        min-height: auto;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    #btn-registration .btn{
+        float: none!important;        
+    }
+
+    #page-content .content-box-xs{
+        margin-top: 50px;
+    }
+
+    .flex-box{
+        flex-direction: column;
+    }
+    .flex-item{
+        flex-basis: 100%;
+    }
+}
+@media(max-width:768px){
+    .visible-sm{
+        display: block!important;
+    }
+    #menu-top{
+        padding-right: 0;
+    }
+    ul.nav.navbar-nav.float-right{
+        text-align: right;
+    }
+    #language{
+        right: auto;
+        left: 15px;
+    }
+    
+    .footer-item {
+        background-color: rgba(172, 193, 206, 0.3);
+    }
+
+    .table-responsive{
+        border: 0;
+    }
+    .table-responsive .table > thead{
+        display: none;
+    }
+    .table-responsive .table > tbody > tr {
+        display: block;
+        border: 1px solid #e0e0e0;
+        border-radius: 2px;
+        margin-bottom: 1.6rem;        
+    }
+    .table-responsive .table > tbody > tr > td{
+        border: 0;
+        display: block;
+        vertical-align: middle;
+        text-align: right;     
+    }
+    .table-responsive .table > tbody > tr > td:hover{
+        background-color: #5994c7;
+    }
+    .table-responsive .table > tbody > tr > td[data-title]:before {
+        content: attr(data-title);
+        float: left;
+        font-size: inherit;
+        font-weight: 400;
+        color: #fff;
+    }
+    #tbl-HoaDon tbody tr td:nth-child(4){
+        text-align: right;
+    }
+}
+
+/* update: 27.11.2019 */
+@media (max-width: 768px){
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr {
+    overflow:hidden;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody  {
+  counter-reset: section;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr:before {
+    counter-increment: section;
+    content: counter(section) ') Thông tin học phần:';
+    display:block;
+    font-size:17px;
+    padding-left:5px;
+    line-height:2;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr:hover:before{
+    color:#eee;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(1),
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(2),
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(3){
+    display:inline-block
+}
+
+
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(2)[data-title]:before,
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(3)[data-title]:before{
+    display:inline-block;
+    content:'-';
+    padding-right: 10px;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(1)[data-title]:before{
+    display:none;
+}
+
+
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(4){
+    width: 100%;
+    float:left;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(5){
+    position:absolute;
+    right:15px;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(5)[data-title]:before{
+    content:'Chọn đóng';
+    float:right;
+    padding-left:10px;
+}
+
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(4){
+    text-align:left;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(4)[data-title]:before{
+    display:none;
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:nth-child(4)[data-title]:after{
+    content:'VNĐ';   
+    display: inline-block;
+    font-weight:normal;
+    padding-left:8px;  
+
+}
+.table-responsive .table#tbl-ChonHocPhan > tbody > tr > td:hover {
+    background-color: transparent;
+}
+
+}
+
+@media(max-width:991px){
+	.col-md-5.pull-right{
+		float:none!important;
+	}
+	#page-content .content-box-xs{
+		margin-top:0;
+		margin-bottom:50px;
+	}
+}
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
